@@ -1,6 +1,6 @@
 const process = require('process');
 
-// Matriz de codificación usada para cifrar el texto
+// Matriz de codificacion usada para cifrar el texto
 var encodingMatrix = [
   [1, -1, -1, 1],
   [2, -3, -5, 4],
@@ -8,7 +8,7 @@ var encodingMatrix = [
   [3, -3, -1, 2]
 ];
 
-// Matriz de decodificación usada para descifrar el texto
+// Matriz de decodificacion usada para descifrar el texto
 var decodingMatrix = [
   [6, -1, 0, -1],
   [22, -4, 1, -4],
@@ -16,7 +16,7 @@ var decodingMatrix = [
   [31, -6, 2, -5]
 ];
 
-// Convierte un arreglo de números en una matriz con un número específico de filas
+// Convierte un arreglo de numeros en una matriz con un numero especifico de filas
 function getMatrixFromArray(arr, rows) {
   var matrix = new Array();
   for (var i = 0; i < rows; i++) matrix[i] = new Array();
@@ -25,7 +25,7 @@ function getMatrixFromArray(arr, rows) {
   for (var i = 0; i < arr.length; i++)
     matrix[i % rows][Math.floor(i / rows)] = arr[i];
 
-  // Si la longitud del arreglo no es múltiplo de 'rows', rellena con ceros
+  // Si la longitud del arreglo no es multiplo de 'rows', rellena con ceros
   if (arr.length % rows != 0)
     for (var i = arr.length % rows; i < rows; i++)
       matrix[i][Math.floor((arr.length - 1) / rows)] = 0;
@@ -33,14 +33,14 @@ function getMatrixFromArray(arr, rows) {
   return matrix;
 }
 
-// Convierte un texto en una matriz de códigos ASCII
+// Convierte un texto en una matriz de codigos ASCII
 function getMatrixFromText(text, rows) {
   var arr = new Array();
   for (var i = 0; i < text.length; i++) arr[i] = text.charCodeAt(i);
   return getMatrixFromArray(arr, rows);
 }
 
-// Convierte una matriz de códigos ASCII en texto
+// Convierte una matriz de codigos ASCII en texto
 function getTextFromMatrix(matrix) {
   var text = new String();
   for (var j = 0; j < matrix[0].length; j++)
@@ -49,7 +49,7 @@ function getTextFromMatrix(matrix) {
   return text;
 }
 
-// Convierte un texto de números separados por espacios en una matriz
+// Convierte un texto de numeros separados por espacios en una matriz
 function getMatrixFromNumbers(text, rows) {
   var i = 0;
   var numbers = text.split(" ");
@@ -63,7 +63,7 @@ function getMatrixFromNumbers(text, rows) {
   return getMatrixFromArray(arr, rows);
 }
 
-// Convierte una matriz en un texto de números separados por espacios
+// Convierte una matriz en un texto de numeros separados por espacios
 function getNumbersFromMatrix(matrix) {
   var text = "";
   for (var j = 0; j < matrix[0].length; j++)
@@ -77,7 +77,7 @@ function multiplyMatrices(m1, m2) {
   var matrix = new Array();
   for (var i = 0; i < m1.length; i++) matrix[i] = new Array();
 
-  // Realiza la multiplicación de matrices
+  // Realiza la multiplicacion de matrices
   for (var i = 0; i < m1.length; i++)
     for (var j = 0; j < m2[0].length; j++) {
       matrix[i][j] = 0;
@@ -87,7 +87,7 @@ function multiplyMatrices(m1, m2) {
   return matrix;
 }
 
-// Mapea números a caracteres usando una transformación
+// Mapea numeros a caracteres usando una transformacion
 function numberToChar(text) {
   var result = new String();
   for (var i = 0; i < text.length; i++)
@@ -97,7 +97,7 @@ function numberToChar(text) {
   return result;
 }
 
-// Mapea caracteres a números usando la transformación inversa
+// Mapea caracteres a numeros usando la transformacion inversa
 function charToNumber(text) {
   var result = new String();
   for (var i = 0; i < text.length; i++)
@@ -107,7 +107,7 @@ function charToNumber(text) {
   return result;
 }
 
-// Función para cifrar el texto
+// Funcion para cifrar el texto
 function encryptText(plainText, mapNumbers) {
   var plainMatrix = getMatrixFromText(plainText, 4);
   var cipherMatrix = multiplyMatrices(encodingMatrix, plainMatrix);
@@ -116,7 +116,7 @@ function encryptText(plainText, mapNumbers) {
   return cipherText;
 }
 
-// Función para descifrar el texto
+// Funcion para descifrar el texto
 function decryptText(cipherText, mapNumbers) {
   if (mapNumbers) cipherText = charToNumber(cipherText);
   var cipherMatrix = getMatrixFromNumbers(cipherText, 4);
@@ -124,20 +124,20 @@ function decryptText(cipherText, mapNumbers) {
   return getTextFromMatrix(plainMatrix);
 }
 
-// Función principal para manejar los parámetros de entrada y ejecutar las funciones correspondientes
+// Funcion principal para manejar los parametros de entrada y ejecutar las funciones correspondientes
 function main() {
   // Se usa linea de comandos en este ejemplo pero la idea es usarlo internamente en un servidor
   const args = process.argv.slice(2);
   const operation = args[0]; // 'encrypt' o 'decrypt'
   const text = args[1]; // Texto a cifrar o descifrar
-  const mapNumbers = args[2] === "true"; // Mapear números a caracteres
+  const mapNumbers = args[2] === "true"; // Mapear numeros a caracteres
 
   if (operation === "encrypt") {
     console.log(encryptText(text, mapNumbers));
   } else if (operation === "decrypt") {
     console.log(decryptText(text, mapNumbers));
   } else {
-    console.log("Operación no válida. Usa 'encrypt' o 'decrypt'.");
+    console.log("Operacion no valida. Usa 'encrypt' o 'decrypt'.");
   }
 }
 
